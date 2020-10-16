@@ -1,3 +1,7 @@
+def mein(n):
+    for i in range(n):
+        print("Saito Hayato")
+
 #この関数をうまく消さずにコンフリクトを解消
 def resolve_conflict(n):
     for i in range(n):
@@ -9,4 +13,6 @@ def main(n):
 
 if __name__ == "__main__":
     main(3)
+    mein(5)
     resolve_conflict(3)    
+
