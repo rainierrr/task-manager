@@ -1,6 +1,12 @@
 def kit(n):
     print(n ** 2)
 
+#この関数をうまく消さずにコンフリクトを解消
+def resolve_conflict(n):
+    for i in range(n):
+        print("conflict解消！")
+
+
 def main(n):
     for i in range(n):
         print("hello world")
@@ -8,3 +14,4 @@ def main(n):
 if __name__ == "__main__":
     main(3)
     kit(5)
+    resolve_conflict(3)    
