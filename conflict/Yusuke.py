@@ -1,3 +1,7 @@
+def test(n):
+    for i in range(n):
+        print("これはテストです")
+
 #この関数をうまく消さずにコンフリクトを解消
 def resolve_conflict(n):
     for i in range(n):
@@ -9,4 +13,5 @@ def main(n):
 
 if __name__ == "__main__":
     main(3)
-    resolve_conflict(3)    
+    resolve_conflict(3)
+    test(2)
