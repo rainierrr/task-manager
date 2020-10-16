@@ -1,4 +1,3 @@
-#この関数をうまく消さずにコンフリクトを解消
 def resolve_conflict(n):
     for i in range(n):
         print("conflict解消！")
