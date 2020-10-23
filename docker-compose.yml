@@ -1,0 +1,39 @@
+version: '3'
+services:
+  frontend:
+    container_name: kit-frontend
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend/:/usr/src/app
+    command: sh -c "cd react-app && yarn start"
+    ports:
+     - "3000:3000"
+    stdin_open: true
+  backend:
+    container_name: kit-backend
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:                  
+      - ./backend/:/code
+    ports:                   
+      - "8000:8000"
+    depends_on:              
+      - db
+  db:
+    container_name: kit-db
+    image: mysql:5.7   
+    environment:       
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: django-db
+      MYSQL_USER: django
+      MYSQL_PASSWORD: django
+      TZ: 'Asia/Tokyo'
+    volumes:
+    - ./db:/var/lib/mysql
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
