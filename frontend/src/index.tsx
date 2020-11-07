@@ -1,10 +1,5 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
+import { render } from "react-dom";
+import App from './App';
 
-export default class App extends React.Component<{}, {}> {
-  render(): JSX.Element {
-    return <div>HelloWorld!</div>;
-  }
-}
-
-ReactDOM.render(<App />, document.getElementById("root"));
+render(<App />, document.getElementById("root"));
