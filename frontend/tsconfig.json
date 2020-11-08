@@ -7,6 +7,7 @@
     "strict": true,                           /* Enable all strict type-checking options. */
     "jsx": "react",
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "lib": [                                /* コンパイルする際に使用する組み込みライブラリを指定する */
       "es2020",
       "dom"
