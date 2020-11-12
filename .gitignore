@@ -8,4 +8,4 @@ media
 /db_data
 # React
 node_modules
-bundle.js
+/frontend/dist/bundle.js
