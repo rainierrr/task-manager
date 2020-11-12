@@ -5,6 +5,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListAltIcon from '@material-ui/icons/ListAlt';
+import IconButton from '@material-ui/core/IconButton';
+import AddIcon from '@material-ui/icons/Add';
+import TextField from '@material-ui/core/TextField';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 const drawerWidth = 240;
@@ -32,6 +35,10 @@ function SideBar(){
                   <ListItemText primary={text} />
                 </ListItem>
               ))}
+            <IconButton edge="start" aria-label="comments">
+              <AddIcon />
+            </IconButton>
+            <TextField id="standard-basic" label="新しいリスト" />
             </List>
         </Drawer>
     </div>
