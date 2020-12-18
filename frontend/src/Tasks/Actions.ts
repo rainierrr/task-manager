@@ -3,6 +3,7 @@ export type Actions = (
   | AddTaskAction
   | DeleteTaskAction
   | CheckTaskAction
+  | DeleteAllCompletedTaskAction
 );
 
 export interface AddTaskAction extends Action {
@@ -13,6 +14,10 @@ export interface AddTaskAction extends Action {
 export interface DeleteTaskAction extends Action {
   type: 'DELETE_TASK';
   id: number;
+}
+
+export interface DeleteAllCompletedTaskAction extends Action {
+  type: 'DELETE_ALL_COMPLETED_TASK_ACTION';
 }
 
 export interface CheckTaskAction extends Action {
@@ -32,6 +37,12 @@ export function deleteTaskAction(id:number) : DeleteTaskAction {
   return {
     type: 'DELETE_TASK',
     id
+  }
+}
+
+export function deleteAllCompletedTaskAction() : DeleteAllCompletedTaskAction {
+  return {
+    type: 'DELETE_ALL_COMPLETED_TASK_ACTION'
   }
 }
 
