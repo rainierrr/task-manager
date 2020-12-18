@@ -28,10 +28,12 @@ const taskReducer = (state: TasksType = initialState(), action: Actions) => {
           },
         ],
 			};
-			case 'DELETE_TASK':
-				return  { tasks: [ ...(state.tasks.filter(( task ) => task.id !== action.id)) ]}
-			case 'CHECK_TASK':
-				return { tasks: [ ...(state.tasks.map(( task ) => task.id === action.id ? {id:task.id, text:task.text, completed: action.completed} : task)) ]}
+	case 'DELETE_TASK':
+		return  { tasks: [ ...(state.tasks.filter(( task ) => task.id !== action.id)) ]}
+	case 'DELETE_ALL_COMPLETED_TASK_ACTION':
+		return  { tasks: [ ...(state.tasks.filter(( task ) => !(task.completed))) ]}
+	case 'CHECK_TASK':
+		return { tasks: [ ...(state.tasks.map(( task ) => task.id === action.id ? {id:task.id, text:task.text, completed: action.completed} : task)) ]}
     default:
       return state
   }
