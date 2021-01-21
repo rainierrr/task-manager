@@ -19,6 +19,8 @@ const useStyles = makeStyles({
 });
 
 
+const week = [ "日", "月", "火", "水", "木", "金", "土" ]
+
 const Task = ({task}: {task: TaskType}) => {
   const classes = useStyles();
   const dispatch = useDispatch()
@@ -31,6 +33,14 @@ const Task = ({task}: {task: TaskType}) => {
     e.preventDefault()
     dispatch(deleteTaskAction(task.id))
   }
+
+  const dateFormat = (date :Date) => {
+	if (typeof date === 'string'){
+		date = new Date(date)
+	}
+	return (date.getMonth()+1) + '月' + date.getDate() + '日(' + week[date.getDay()]+ ') '+  date.getHours() + '時' + + date.getMinutes() + '分'
+  }
+
   return (
       <TableRow>
         <TableCell padding="checkbox">
@@ -45,7 +55,7 @@ const Task = ({task}: {task: TaskType}) => {
           {task.name}
         </TableCell>
 		<TableCell align='right'> {task.priority} </TableCell>
-		<TableCell align='right'> {task.date} </TableCell>
+		<TableCell align='right'> {dateFormat(task.date)} </TableCell>
         <TableCell align='right'>
           <IconButton edge="end" aria-label="comments" onClick={deleteTask}>
             <DeleteIcon />

@@ -10,7 +10,8 @@ export interface AddTaskAction extends Action {
     type: 'ADD_TASK';
     name: string;
     category: string,
-    priority: string
+    priority: string,
+    date: Date
 }
 
 export interface DeleteTaskAction extends Action {
@@ -28,12 +29,13 @@ export interface CheckTaskAction extends Action {
   completed: boolean;
 }
 
-export function addTaskAction(name:string, category:string, priority: string) : AddTaskAction {
+export function addTaskAction(name:string, category:string, priority: string, date: Date) : AddTaskAction {
   return {
     type: 'ADD_TASK',
     name,
     category,
-    priority
+    priority,
+    date
   }
 }
 

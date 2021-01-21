@@ -65,10 +65,12 @@ const index = () => {
   const [task, setTask] = useState('');
   const [priority, setPriority] = useState('');
   const [category, setCategory] = useState('');
-  const [selectedDate, handleDateChange] = useState(new Date());
+  const [date, setDate] = useState(new Date());
   const tasks = useSelector((state: RootState) => state.tasks)
   const dispatch = useDispatch();
+
   useEffect(() => localStorage.setItem(APP_KEY, JSON.stringify(tasks)),[ tasks ]);
+  useEffect(() => console.log(tasks),[ tasks ]);
   const category_dict:Array<string> = ["OS", "情報工学実験","プロジェクトデザイン"]
   const priority_dict:Array<string> = ["High", "Mid","Low"]
 
@@ -83,10 +85,11 @@ const index = () => {
     e.preventDefault()
     const category_index :number = parseInt(category)
     const priority_index :number = parseInt(priority)
-    dispatch(addTaskAction(task, category_dict[category_index], priority_dict[priority_index]))
+    dispatch(addTaskAction(task, category_dict[category_index], priority_dict[priority_index], date))
     setTask('')
     setPriority('')
     setCategory('')
+    setDate(new Date())
   }
 
   const deleteAllCompletedDeleteButton = (e: React.MouseEvent<HTMLElement>) => {
@@ -141,7 +144,7 @@ const index = () => {
               </Select>
             </FormControl>
             <MuiPickersUtilsProvider utils={DateFnsUtils} >
-              <DateTimePicker className={classes.dateField} value={selectedDate} onChange={handleDateChange} />
+              <DateTimePicker className={classes.dateField} value={date} onChange={setDate} />
             </MuiPickersUtilsProvider>
           </div>
         <TasksIndex />
