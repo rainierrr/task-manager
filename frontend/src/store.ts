@@ -1,6 +1,7 @@
 import  taskReducer  from './Tasks/reducer';
 import { createStore } from 'redux';
 import { combineReducers, applyMiddleware, compose} from 'redux';
+import thunk from 'redux-thunk'
 
 export const rootReducer = combineReducers({
     tasks: taskReducer
@@ -18,7 +19,7 @@ const composeReduxDevToolsEnhancers = typeof window === 'object' && window.__RED
 
 export const store = createStore(
     rootReducer,
-    composeReduxDevToolsEnhancers(applyMiddleware())
+    composeReduxDevToolsEnhancers(applyMiddleware(thunk))
     );
 
 export type RootState = ReturnType<typeof rootReducer>

@@ -15,6 +15,21 @@ const initialState = (): TasksType => {
 
 const taskReducer = (state: TasksType = initialState(), action: Actions) => {
   switch (action.type) {
+		case 'FETCH_TASKS':
+			console.log(action.response)
+			return {
+        tasks: [
+          ...state.tasks,
+          {
+            id: action.response.id,
+            name: action.response.name,
+						completed: action.response.completed,
+						priority: action.response.priority,
+						date: action.response.date,
+						category: action.response.category,
+          },
+        ],
+			};
     case 'ADD_TASK':
 			const length = state.tasks.length
 			const id = length === 0 ? 0 : state.tasks[length - 1].id + 1

@@ -1,9 +1,9 @@
 import * as React from "react";
 import Grid from '@material-ui/core/Grid';
 import SideBar from './SideBar';
-import Heder from './Header';
 import ListFilter from './ListFilter';
 import TaskList from './Tasks/index';
+import Header from './Header';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 const drawerWidth = 240;
@@ -27,9 +27,10 @@ function App() {
   const classes = useStyles();
   return (
     <div>
-        <Heder />
+        <div>
         <SideBar/>
         <ListFilter />
+        <Header />
         <div>
           <Grid container className={classes.container}>
             <Grid item xs={8}>
@@ -38,6 +39,7 @@ function App() {
               </div>
             </Grid>
           </Grid>
+        </div>
         </div>
     </div>
   );

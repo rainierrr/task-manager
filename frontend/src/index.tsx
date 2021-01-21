@@ -6,6 +6,9 @@ import { Provider } from 'react-redux'
 import theme from './theme'
 import store from './store'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import { BrowserRouter, Route, Switch} from 'react-router-dom'
+import LineForm from './LineForm/index'
+
 
 function Root(){
   return (
@@ -13,7 +16,12 @@ function Root(){
       <ThemeProvider theme={theme}>
         <CssBaseline />
           <Provider store={store}>
-            <App />
+            <BrowserRouter>
+              <Switch>
+                <Route exact path='/' component={App} />
+                <Route exact path='/line' component={LineForm} />
+              </Switch>
+            </BrowserRouter>
           </Provider>,
       </ThemeProvider>
     </div>

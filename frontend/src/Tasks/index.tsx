@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useEffect } from 'react'
+import { useEffect, useCallback } from 'react'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store'
 import {
   addTaskAction,
-  deleteAllCompletedTaskAction
+  deleteAllCompletedTaskAction,
+  fetchTasks
 } from './Actions'
 import { TaskType } from './Type'
 import TasksIndex from './TasksIndex'
@@ -25,6 +26,7 @@ import {
   DateTimePicker,
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
+import axios from 'axios'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -69,8 +71,13 @@ const index = () => {
   const tasks = useSelector((state: RootState) => state.tasks)
   const dispatch = useDispatch();
 
+  const ROOT_URL = 'http://localhost:8000'
+  const TOKEN = '69ebbef3b9f2d7b663b150e0c97b5c59e9ee1a5d'
   useEffect(() => localStorage.setItem(APP_KEY, JSON.stringify(tasks)),[ tasks ]);
-  useEffect(() => console.log(tasks),[ tasks ]);
+
+  //useEffect(() => { fetchTasks(dispatch) },[]);
+  useEffect(() => { console.log(tasks) },[tasks]);
+
   const category_dict:Array<string> = ["OS", "情報工学実験","プロジェクトデザイン"]
   const priority_dict:Array<string> = ["High", "Mid","Low"]
 

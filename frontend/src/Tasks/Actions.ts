@@ -1,10 +1,14 @@
-import { Action } from 'redux';
+import { Action, Dispatch } from 'redux';
+import axios from 'axios'
+import { TaskType } from './Type'
 export type Actions = (
   | AddTaskAction
   | DeleteTaskAction
   | CheckTaskAction
   | DeleteAllCompletedTaskAction
+  | Fetch_Tasks
 );
+
 
 export interface AddTaskAction extends Action {
     type: 'ADD_TASK';
@@ -13,7 +17,10 @@ export interface AddTaskAction extends Action {
     priority: string,
     date: Date
 }
-
+export interface Fetch_Tasks extends Action {
+  type: 'FETCH_TASKS';
+  response: TaskType;
+}
 export interface DeleteTaskAction extends Action {
   type: 'DELETE_TASK';
   id: number;
@@ -39,6 +46,7 @@ export function addTaskAction(name:string, category:string, priority: string, da
   }
 }
 
+
 export function deleteTaskAction(id:number) : DeleteTaskAction {
   return {
     type: 'DELETE_TASK',
@@ -59,3 +67,19 @@ export function checkTaskAction(id:number, completed:boolean) : CheckTaskAction 
     completed
   }
 }
+const ROOT_URL = 'http://localhost:8000'
+const TOKEN = '69ebbef3b9f2d7b663b150e0c97b5c59e9ee1a5d'
+
+export const fetchTasks = async(dispatch :Dispatch) => {
+  console.log('Go')
+  const response = await axios.get(`${ROOT_URL}/api/tasks/`,{
+    headers: {
+      'Authorization': TOKEN
+    }
+  })
+  for(const key in response.data) {
+    dispatch({ type: 'FETCH_TASKS', response: response.data[key]})
+  }
+  console.log('Go')
+}
+
