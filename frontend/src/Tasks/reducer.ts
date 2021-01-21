@@ -23,8 +23,11 @@ const taskReducer = (state: TasksType = initialState(), action: Actions) => {
           ...state.tasks,
           {
             id,
-            text: action.text,
-            completed: false,
+            name: action.name,
+						completed: false,
+						priority: 'Higt',
+						date: 1,
+						category: 'カテゴリー',
           },
         ],
 			};
@@ -33,7 +36,7 @@ const taskReducer = (state: TasksType = initialState(), action: Actions) => {
 	case 'DELETE_ALL_COMPLETED_TASK_ACTION':
 		return  { tasks: [ ...(state.tasks.filter(( task ) => !(task.completed))) ]}
 	case 'CHECK_TASK':
-		return { tasks: [ ...(state.tasks.map(( task ) => task.id === action.id ? {id:task.id, text:task.text, completed: action.completed} : task)) ]}
+		return { tasks: [ ...(state.tasks.map(( task ) => task.id === action.id ? {...task, completed: action.completed} : task)) ]}
     default:
       return state
   }

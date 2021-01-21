@@ -8,8 +8,7 @@ import {
   deleteAllCompletedTaskAction
 } from './Actions'
 import { TaskType } from './Type'
-import Task from './Task'
-import List from '@material-ui/core/List'
+import TasksIndex from './TasksIndex'
 import AddIcon from '@material-ui/icons/Add'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -17,8 +16,13 @@ import TextField from '@material-ui/core/TextField'
 import Fab from '@material-ui/core/Fab';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { red } from "@material-ui/core/colors";
-
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+//import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
+//import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
+//import DateTimePicker from '@material-ui/lab/DateTimePicker';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,10 +33,24 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     container: {
     },
+    completedButton: {
+      marginLeft: theme.spacing(10),
+    },
+    form: {
+      marginLeft: theme.spacing(5),
+    },
     textField: {
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
       width: '50%',
+    },
+    dateField: {
+      margin: theme.spacing(1),
+      width: '20%',
+    },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
     },
   })
 );
@@ -43,14 +61,27 @@ export const APP_KEY = 'kitManager'
 function index() {
   const classes = useStyles();
   const [task, setTask] = React.useState('');
+  const [priority, setPriority] = React.useState('');
+  const [category, setCategory] = React.useState('');
   const tasks = useSelector((state: RootState) => state.tasks)
   const dispatch = useDispatch();
   useEffect(() => localStorage.setItem(APP_KEY, JSON.stringify(tasks)),[ tasks ]);
 
+  const [selectedDate, handleDateChange] = React.useState<Date | null>(new Date());
+
+  const handlePriorityChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setPriority(event.target.value as string);
+  };
+
+  const handleCategoryChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setCategory(event.target.value as string);
+  };
   const addTask = (e: React.MouseEvent<HTMLElement>) =>{
     e.preventDefault()
     dispatch(addTaskAction(task))
     setTask('')
+    setPriority('')
+    setCategory('')
   }
 
   const deleteAllCompletedDeleteButton = (e: React.MouseEvent<HTMLElement>) => {
@@ -63,21 +94,60 @@ function index() {
     <div>
       <Card>
         <CardContent>
-        <h1>課題一覧</h1>
-        <h2>今日やること</h2>
-        <Fab size="small" color="secondary" onClick={addTask} disabled={task === ''}>
-          <AddIcon />
-        </Fab>
-        <TextField id="standard-basic" label="新しいタスク" value={task} onChange={e => setTask(e.target.value)} className={classes.textField}/>
-        <Button variant="outlined" color="secondary" startIcon={<DeleteIcon />}
-          onClick={deleteAllCompletedDeleteButton} disabled={tasks.tasks.find((task:TaskType) => task.completed === true) === undefined}>
-          完了したタスクの削除
-        </Button>
-        <List>
-          { tasks.tasks.map((task: TaskType) => ( <Task key={task.id} task={task}/> )) }
-        </List>
-        </CardContent>
-      </Card>
+          <h1>課題一覧</h1>
+          <h2>今日やること</h2>
+          <Fab size="small" color="secondary" onClick={addTask} disabled={task === ''}>
+            <AddIcon />
+          </Fab>
+          <TextField id="standard-basic" label="新しいタスク" value={task} onChange={e => setTask(e.target.value)} className={classes.textField}/>
+          <Button className={classes.completedButton} variant="outlined" color="secondary" startIcon={<DeleteIcon />}
+              onClick={deleteAllCompletedDeleteButton} disabled={tasks.tasks.find((task:TaskType) => task.completed === true) === undefined}>
+              完了したタスクの削除
+          </Button>
+          <div className={classes.form}>
+          <FormControl className={classes.formControl}>
+              <InputLabel id="demo-simple-select-label">カテゴリー</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={category}
+                onChange={handleCategoryChange}
+              >
+                <MenuItem value={10}>OS</MenuItem>
+                <MenuItem value={20}>情報工学実験</MenuItem>
+                <MenuItem value={30}>プロジェクトデザイン</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl className={classes.formControl}>
+              <InputLabel id="demo-simple-select-label">優先度</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={priority}
+                onChange={handlePriorityChange}
+              >
+                <MenuItem value={10}>Higt</MenuItem>
+                <MenuItem value={20}>Middle</MenuItem>
+                <MenuItem value={30}>Low</MenuItem>
+              </Select>
+            </FormControl>
+            <TextField
+              id="datetime-local"
+              label="期日"
+              type="datetime-local"
+              defaultValue="2020-05-24T10:30"
+              className={classes.dateField}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </div>
+
+
+        <TasksIndex />
+      </CardContent>
+    </Card>
+
     </div>
   );
 }

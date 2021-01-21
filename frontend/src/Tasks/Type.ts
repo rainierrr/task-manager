@@ -1,7 +1,10 @@
 export type TaskType  = {
     id: number;
-    text: string;
+    name: string;
     completed: boolean;
+    date: number;
+    priority: string;
+    category: string;
 }
 
 export type TasksType = {
