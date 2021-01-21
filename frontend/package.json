@@ -18,11 +18,14 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "@date-io/date-fns": "1.x",
     "@material-ui/core": "^4.11.2",
     "@material-ui/data-grid": "^4.0.0-alpha.17",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^5.0.0-alpha.23",
+    "@material-ui/pickers": "^3.2.10",
     "@material-ui/styles": "^4.10.0",
+    "@types/date-fns": "^2.6.0",
     "@types/react-redux": "^7.1.12",
     "add": "^2.0.6",
     "react": "^17.0.1",

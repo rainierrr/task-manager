@@ -1,4 +1,4 @@
-import * as React from "react"
+import React, { useState } from 'react';
 import { useEffect } from 'react'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { useSelector, useDispatch } from 'react-redux';
@@ -20,9 +20,11 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-//import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
-//import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
-//import DateTimePicker from '@material-ui/lab/DateTimePicker';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  DateTimePicker,
+  MuiPickersUtilsProvider,
+} from '@material-ui/pickers';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,8 +47,8 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '50%',
     },
     dateField: {
-      margin: theme.spacing(1),
-      width: '20%',
+      margin: theme.spacing(3),
+      width: '30%',
     },
     formControl: {
       margin: theme.spacing(1),
@@ -67,7 +69,7 @@ function index() {
   const dispatch = useDispatch();
   useEffect(() => localStorage.setItem(APP_KEY, JSON.stringify(tasks)),[ tasks ]);
 
-  const [selectedDate, handleDateChange] = React.useState<Date | null>(new Date());
+  const [selectedDate, handleDateChange] = React.useState(new Date());
 
   const handlePriorityChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setPriority(event.target.value as string);
@@ -131,16 +133,9 @@ function index() {
                 <MenuItem value={30}>Low</MenuItem>
               </Select>
             </FormControl>
-            <TextField
-              id="datetime-local"
-              label="期日"
-              type="datetime-local"
-              defaultValue="2020-05-24T10:30"
-              className={classes.dateField}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
+            <MuiPickersUtilsProvider utils={DateFnsUtils} >
+              <DateTimePicker className={classes.dateField} value={selectedDate} onChange={handleDateChange} />
+            </MuiPickersUtilsProvider>
           </div>
 
 

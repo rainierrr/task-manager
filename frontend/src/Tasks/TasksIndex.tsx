@@ -8,8 +8,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import DeleteIcon from '@material-ui/icons/Delete'
-import IconButton from '@material-ui/core/IconButton';
 import Task from './Task'
 import { TaskType } from './Type'
 import { useSelector, useDispatch } from 'react-redux';
