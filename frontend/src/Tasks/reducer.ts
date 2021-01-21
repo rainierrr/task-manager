@@ -25,9 +25,9 @@ const taskReducer = (state: TasksType = initialState(), action: Actions) => {
             id,
             name: action.name,
 						completed: false,
-						priority: 'Higt',
+						priority: action.priority,
 						date: 1,
-						category: 'カテゴリー',
+						category: action.category,
           },
         ],
 			};

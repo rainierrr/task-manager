@@ -60,16 +60,17 @@ const useStyles = makeStyles((theme: Theme) =>
 export const APP_KEY = 'kitManager'
 
 
-function index() {
+const index = () => {
   const classes = useStyles();
-  const [task, setTask] = React.useState('');
-  const [priority, setPriority] = React.useState('');
-  const [category, setCategory] = React.useState('');
+  const [task, setTask] = useState('');
+  const [priority, setPriority] = useState('');
+  const [category, setCategory] = useState('');
+  const [selectedDate, handleDateChange] = useState(new Date());
   const tasks = useSelector((state: RootState) => state.tasks)
   const dispatch = useDispatch();
   useEffect(() => localStorage.setItem(APP_KEY, JSON.stringify(tasks)),[ tasks ]);
-
-  const [selectedDate, handleDateChange] = React.useState(new Date());
+  const category_dict:Array<string> = ["OS", "情報工学実験","プロジェクトデザイン"]
+  const priority_dict:Array<string> = ["High", "Mid","Low"]
 
   const handlePriorityChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setPriority(event.target.value as string);
@@ -80,7 +81,9 @@ function index() {
   };
   const addTask = (e: React.MouseEvent<HTMLElement>) =>{
     e.preventDefault()
-    dispatch(addTaskAction(task))
+    const category_index :number = parseInt(category)
+    const priority_index :number = parseInt(priority)
+    dispatch(addTaskAction(task, category_dict[category_index], priority_dict[priority_index]))
     setTask('')
     setPriority('')
     setCategory('')
@@ -90,6 +93,14 @@ function index() {
     e.preventDefault()
     dispatch(deleteAllCompletedTaskAction())
 
+  }
+
+  const createSelectedMenu = (menus :Array<string>) => {
+    return(
+      menus.map( (menu :string, index :number) => (
+        <MenuItem value={index}>{menu}</MenuItem>
+      ))
+    )
   }
 
   return (
@@ -115,9 +126,7 @@ function index() {
                 value={category}
                 onChange={handleCategoryChange}
               >
-                <MenuItem value={10}>OS</MenuItem>
-                <MenuItem value={20}>情報工学実験</MenuItem>
-                <MenuItem value={30}>プロジェクトデザイン</MenuItem>
+                {createSelectedMenu(category_dict)}
               </Select>
             </FormControl>
             <FormControl className={classes.formControl}>
@@ -128,21 +137,16 @@ function index() {
                 value={priority}
                 onChange={handlePriorityChange}
               >
-                <MenuItem value={10}>Higt</MenuItem>
-                <MenuItem value={20}>Middle</MenuItem>
-                <MenuItem value={30}>Low</MenuItem>
+                {createSelectedMenu(priority_dict)}
               </Select>
             </FormControl>
             <MuiPickersUtilsProvider utils={DateFnsUtils} >
               <DateTimePicker className={classes.dateField} value={selectedDate} onChange={handleDateChange} />
             </MuiPickersUtilsProvider>
           </div>
-
-
         <TasksIndex />
       </CardContent>
     </Card>
-
     </div>
   );
 }

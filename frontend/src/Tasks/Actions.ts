@@ -9,6 +9,8 @@ export type Actions = (
 export interface AddTaskAction extends Action {
     type: 'ADD_TASK';
     name: string;
+    category: string,
+    priority: string
 }
 
 export interface DeleteTaskAction extends Action {
@@ -26,10 +28,12 @@ export interface CheckTaskAction extends Action {
   completed: boolean;
 }
 
-export function addTaskAction(name:string) : AddTaskAction {
+export function addTaskAction(name:string, category:string, priority: string) : AddTaskAction {
   return {
     type: 'ADD_TASK',
     name,
+    category,
+    priority
   }
 }
 
