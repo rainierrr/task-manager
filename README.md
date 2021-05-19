@@ -1,7 +1,8 @@
 # task-manager
 ## 概要
 勉強のために作成したタスク管理WEBアプケーション
-映像
+
+実際の画像
 ![image](https://user-images.githubusercontent.com/49901874/118800792-4337a180-b8db-11eb-8f51-536abb0b26a9.png)
 ## 利用技術
 - React (Hooks)
